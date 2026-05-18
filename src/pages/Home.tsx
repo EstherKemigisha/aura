@@ -28,6 +28,10 @@ const filterPillClass =
   'px-4 py-2.5 rounded-full font-body text-sm font-semibold transition-all whitespace-nowrap flex-shrink-0';
 const sectionPad = 'py-10 sm:py-14 lg:py-16';
 const headingLg = 'font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-deep-brown';
+const heroMobileH = 'h-[min(52vw,320px)] sm:h-80';
+const homeImgH = `w-full ${heroMobileH} lg:h-[420px] object-cover object-center`;
+const homeCardImgH = `w-full ${heroMobileH} object-cover object-center`;
+const heroContentMinH = 'min-h-[480px] sm:min-h-[520px] md:min-h-[560px]';
 
 export default function Home() {
   const [activeHeroImage, setActiveHeroImage] = useState(0);
@@ -40,27 +44,45 @@ export default function Home() {
     message: '',
   });
 
+  const heroImgClass =
+    'hero-slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-[1600ms] ease-in-out';
+
   const heroSlides = [
     {
       image: naturalhair,
+      objectPosition: 'center center',
       eyebrow: 'AURA',
+      showAura: true,
       title: 'Crafted with natural ingredients.',
       description: 'Hydration your hair will love.',
       tags: ['Protect', 'Strengthen', 'Enhance'],
     },
     {
       image: natalhair,
+      objectPosition: 'center center',
       eyebrow: 'AURA',
-      title: 'Hydration your hair will love.',
-      description: 'Crafted with natural ingredients.',
-      tags: ['Moisture Lock', 'Curl Definition', 'Healthy Scalp'],
+      showAura: false,
+      title: 'Embrace every curl',
+      description: 'Celebrate your texture with formulas made for waves, curls, and coils.',
+      tags: ['Curl Love', 'Natural Beauty', 'Confidence'],
     },
     {
       image: naturalhair1,
+      objectPosition: 'center center',
       eyebrow: 'AURA',
-      title: 'Crafted with natural ingredients.',
-      description: 'Hydration your hair will love.',
-      tags: ['4A-4C Support', 'Soft Hold', 'Daily Nourishment'],
+      showAura: false,
+      title: 'Good hair starts here',
+      description: 'Gentle care rooted in African botanicals and modern science.',
+      tags: ['Healthy Scalp', 'Deep Moisture', 'Daily Care'],
+    },
+    {
+      image: naturalhair,
+      objectPosition: 'center center',
+      eyebrow: 'AURA',
+      showAura: false,
+      title: 'Pure. Natural. You.',
+      description: 'Clean ingredients, no sulfates or parabens — just nourished, defined hair.',
+      tags: ['Clean Beauty', '4A-4C Support', 'Self Love'],
     },
   ];
 
@@ -97,7 +119,7 @@ export default function Home() {
 
   const naturalTextureBlock = (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center bg-white/70 rounded-2xl p-5 sm:p-8 lg:p-12 shadow-sm">
-      <img src={natalhair} alt="Natural hair care" className="w-full h-52 sm:h-72 lg:h-[420px] object-cover rounded-2xl" />
+      <img src={natalhair} alt="Natural hair care" className={`${homeImgH} rounded-2xl`} />
       <div>
         <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-deep-brown mb-4 text-center lg:text-left">Celebrating Your Natural Texture</h2>
         <p className="font-body text-gray-600 mb-6 leading-relaxed text-center lg:text-left">
@@ -126,21 +148,20 @@ export default function Home() {
     <div className="min-h-screen">
         {/* Hero */}
         <section id="home" className={`relative overflow-hidden ${sectionClass}`}>
-          <div className="md:hidden relative h-[min(52vw,320px)] sm:h-80 overflow-hidden">
+          <div className={`md:hidden relative overflow-hidden ${heroMobileH}`}>
             {heroSlides.map((slide, index) => (
               <img
-                key={`mobile-${slide.image}`}
+                key={`hero-mobile-${index}`}
                 src={slide.image}
                 alt="Natural hair beauty"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1600ms] ease-in-out ${
-                  activeHeroImage === index ? 'opacity-100' : 'opacity-0'
-                }`}
+                style={{ objectPosition: slide.objectPosition }}
+                className={`${heroImgClass} ${activeHeroImage === index ? 'opacity-100' : 'opacity-0'}`}
               />
             ))}
             <div className="absolute inset-0 bg-gradient-to-t from-cream via-cream/40 to-transparent" />
           </div>
 
-          <div className="hidden md:block absolute inset-0 top-20">
+          <div className={`hidden md:block absolute inset-x-0 top-20 bottom-0 ${heroContentMinH}`}>
             <div className="absolute left-0 top-0 w-1/2 h-full overflow-hidden pointer-events-none">
               <div className="playful-shape playful-shape-1" />
               <div className="playful-shape playful-shape-2" />
@@ -150,12 +171,11 @@ export default function Home() {
             <div className="absolute right-0 top-0 w-1/2 h-full overflow-hidden">
               {heroSlides.map((slide, index) => (
                 <img
-                  key={slide.image}
+                  key={`hero-desktop-${index}`}
                   src={slide.image}
                   alt="Natural hair beauty"
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1600ms] ease-in-out ${
-                    activeHeroImage === index ? 'opacity-100' : 'opacity-0'
-                  }`}
+                  style={{ objectPosition: slide.objectPosition }}
+                  className={`${heroImgClass} ${activeHeroImage === index ? 'opacity-100' : 'opacity-0'}`}
                 />
               ))}
               <div className="absolute inset-0 bg-gradient-to-l from-transparent via-cream/10 to-cream/35" />
@@ -163,17 +183,23 @@ export default function Home() {
             <div className="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-r from-cream/95 via-cream/90 to-transparent" />
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-6 pb-10 md:pt-24 md:pb-14">
+          <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-6 pb-10 md:pt-24 md:pb-14 ${heroContentMinH} flex flex-col justify-center`}>
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               <div className="relative max-w-xl mx-auto lg:mx-0 w-full">
                 <div key={activeHeroImage} className="hero-copy-animate relative z-10">
                   <p className="font-body text-gold font-semibold tracking-wider text-xs sm:text-sm mb-3 sm:mb-4 text-center lg:text-left">
                     {heroSlides[activeHeroImage].eyebrow}
                   </p>
-                  <h1 className="font-display font-bold text-[2rem] leading-[1.15] sm:text-5xl lg:text-7xl text-deep-brown mb-4 sm:mb-6 text-center lg:text-left">
-                    Aura
-                    <br />
-                    <span className="text-gradient">{heroSlides[activeHeroImage].title}</span>
+                  <h1 className="font-display font-bold text-[2rem] leading-[1.15] sm:text-5xl lg:text-7xl text-deep-brown mb-4 sm:mb-6 text-center lg:text-left min-h-[5.5rem] sm:min-h-[8.5rem] lg:min-h-[11rem]">
+                    {heroSlides[activeHeroImage].showAura ? (
+                      <>
+                        Aura
+                        <br />
+                        <span className="text-gradient">{heroSlides[activeHeroImage].title}</span>
+                      </>
+                    ) : (
+                      <span className="text-gradient">{heroSlides[activeHeroImage].title}</span>
+                    )}
                   </h1>
                   <p className="font-body text-gray-700 text-base sm:text-lg mb-6 sm:mb-8 max-w-lg leading-relaxed text-center lg:text-left mx-auto lg:mx-0 px-1">
                     {heroSlides[activeHeroImage].description}
@@ -236,7 +262,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="order-1 lg:order-2">
-                <img src={naturalhair1} alt="Natural hair celebration" className="w-full h-52 sm:h-72 lg:h-[420px] object-cover rounded-2xl shadow-xl" />
+                <img src={naturalhair1} alt="Natural hair celebration" className={`${homeImgH} rounded-2xl shadow-xl`} />
               </div>
             </div>
 
@@ -304,7 +330,7 @@ export default function Home() {
                           BESTSELLER
                         </span>
                       )}
-                      <img src={product.image} alt={product.name} className="w-full h-52 sm:h-64 object-cover" />
+                      <img src={product.image} alt={product.name} className={homeCardImgH} />
                     </div>
                     <div className="p-6">
                       <span className="text-xs text-gray-400 uppercase tracking-wider">{product.category}</span>
@@ -339,7 +365,7 @@ export default function Home() {
             {/* Featured natural hair article */}
             <article className="bg-white rounded-2xl overflow-hidden shadow-sm mb-10 sm:mb-16 reveal">
               <div className="grid lg:grid-cols-2">
-                <img src={naturalhair} alt="Natural hair care routine" className="w-full h-64 lg:h-full min-h-[280px] object-cover" />
+                <img src={naturalhair} alt="Natural hair care routine" className={homeImgH} />
                 <div className="p-5 sm:p-8 lg:p-12 flex flex-col justify-center">
                   <span className="inline-block w-fit bg-gold text-deep-brown text-xs font-semibold px-3 py-1 rounded-full mb-4">
                     Featured · Natural Hair
@@ -397,8 +423,8 @@ export default function Home() {
                   className="bg-white rounded-2xl overflow-hidden shadow-sm card-hover reveal group"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="relative h-56 overflow-hidden">
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                  <div className={`relative overflow-hidden ${heroMobileH}`}>
+                    <img src={post.image} alt={post.title} className={`w-full h-full object-cover object-center`} />
                     <span className="absolute top-4 left-4 bg-gold text-deep-brown text-xs font-semibold px-3 py-1 rounded-full">
                       {post.category}
                     </span>

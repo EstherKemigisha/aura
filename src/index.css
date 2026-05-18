@@ -650,6 +650,12 @@
   animation: heroTextFancy 3.5s ease-in-out;
 }
 
+.hero-slide-img {
+  object-fit: cover;
+  min-width: 100%;
+  min-height: 100%;
+}
+
 .playful-shape {
   position: absolute;
   border-radius: 999px;
