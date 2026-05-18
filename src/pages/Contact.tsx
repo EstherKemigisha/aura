@@ -24,12 +24,12 @@ const contactInfo = [
   {
     icon: MapPin,
     title: 'Visit Our Studio',
-    details: ['123 Natural Beauty Ave', 'Lagos, Nigeria', 'West Africa'],
+    details: ['Kisaasi', 'Kampala, Uganda'],
   },
   {
     icon: Phone,
     title: 'Call Us',
-    details: ['+234 800 123 4567', 'Mon-Fri: 9am - 6pm WAT'],
+    details: ['+256 772 123 456', 'Mon-Fri: 9am - 6pm EAT'],
   },
   {
     icon: Mail,
@@ -97,7 +97,7 @@ const faqs = [
             {/* WhatsApp Button */}
             <div className="reveal">
               <a
-                href="https://wa.me/2348001234567"
+                href="https://wa.me/256772123456"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full flex items-center justify-center gap-3 bg-[#25D366] text-white rounded-2xl py-4 px-6 font-display font-semibold hover:bg-[#128C7E] transition-colors shadow-lg"

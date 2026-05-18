@@ -25,20 +25,20 @@ export default function Footer() {
           <div>
             <h4 className="font-display font-semibold text-lg mb-4">Shop</h4>
             <ul className="space-y-2 text-sm text-cream/70">
-              <li><a href="/shop" className="hover:text-gold transition-colors">All Products</a></li>
-              <li><a href="/shop" className="hover:text-gold transition-colors">Treatments</a></li>
-              <li><a href="/shop" className="hover:text-gold transition-colors">Styling</a></li>
-              <li><a href="/shop" className="hover:text-gold transition-colors">Shampoo & Conditioner</a></li>
+              <li><a href="#shop" className="hover:text-gold transition-colors">All Products</a></li>
+              <li><a href="#shop" className="hover:text-gold transition-colors">Treatments</a></li>
+              <li><a href="#shop" className="hover:text-gold transition-colors">Styling</a></li>
+              <li><a href="#shop" className="hover:text-gold transition-colors">Shampoo & Conditioner</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-display font-semibold text-lg mb-4">Company</h4>
             <ul className="space-y-2 text-sm text-cream/70">
-              <li><a href="/about" className="hover:text-gold transition-colors">About Us</a></li>
-              <li><a href="/blog" className="hover:text-gold transition-colors">Blog</a></li>
-              <li><a href="#values" className="hover:text-gold transition-colors">Our Values</a></li>
-              <li><a href="/contact" className="hover:text-gold transition-colors">Contact</a></li>
+              <li><a href="#about" className="hover:text-gold transition-colors">About Us</a></li>
+              <li><a href="#blog" className="hover:text-gold transition-colors">Blog</a></li>
+              <li><a href="#about" className="hover:text-gold transition-colors">Our Values</a></li>
+              <li><a href="#contact" className="hover:text-gold transition-colors">Contact</a></li>
             </ul>
           </div>
 

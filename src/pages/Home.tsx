@@ -1,57 +1,42 @@
+import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Star } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import {
+  Star,
+  Leaf,
+  Heart,
+  Recycle,
+  Sparkles,
+  Calendar,
+  Clock,
+  ArrowRight,
+  MapPin,
+  Phone,
+  Mail,
+  Send,
+} from 'lucide-react';
 import { products } from '../data/products';
-import { testimonials } from '../data/testimonials';
+import { blogPosts } from '../data/blog';
+import { values } from '../data/values';
 import natalhair from '../assets/natalhair.jpg';
 import naturalhair from '../assets/naturalhair.jpeg';
 import naturalhair1 from '../assets/naturalhair1.jpg';
 
+const categories = ['All', 'Treatments', 'Styling', 'Shampoo', 'Conditioner'];
+const blogCategories = ['All', 'Hair Care', 'Styling', 'Transitioning', 'Education'];
+
+const sectionClass = 'scroll-mt-24';
+
 export default function Home() {
   const [activeHeroImage, setActiveHeroImage] = useState(0);
-  const instagramPosts = [natalhair, naturalhair, naturalhair1, natalhair, naturalhair, naturalhair1];
-  const collectionGroups = [
-    {
-      title: 'Protect',
-      cards: [
-        { name: products[5].name, price: products[5].price, image: natalhair },
-        { name: products[4].name, price: products[4].price, image: naturalhair1 },
-        { name: products[3].name, price: products[3].price, image: naturalhair },
-      ],
-    },
-    {
-      title: 'Curl',
-      cards: [
-        { name: products[1].name, price: products[1].price, image: naturalhair },
-        { name: products[6].name, price: products[6].price, image: natalhair },
-        { name: products[0].name, price: products[0].price, image: naturalhair1 },
-      ],
-    },
-    {
-      title: 'Strengthen',
-      cards: [
-        { name: products[2].name, price: products[2].price, image: naturalhair1 },
-        { name: products[7].name, price: products[7].price, image: naturalhair },
-        { name: products[0].name, price: products[0].price, image: natalhair },
-      ],
-    },
-    {
-      title: 'Healthy Scalp',
-      cards: [
-        { name: products[4].name, price: products[4].price, image: naturalhair },
-        { name: products[2].name, price: products[2].price, image: natalhair },
-        { name: products[5].name, price: products[5].price, image: naturalhair1 },
-      ],
-    },
-    {
-      title: 'Enhance',
-      cards: [
-        { name: products[1].name, price: products[1].price, image: naturalhair1 },
-        { name: products[3].name, price: products[3].price, image: natalhair },
-        { name: products[6].name, price: products[6].price, image: naturalhair },
-      ],
-    },
-  ];
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedBlogCategory, setSelectedBlogCategory] = useState('All');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+
   const heroSlides = [
     {
       image: naturalhair,
@@ -76,25 +61,74 @@ export default function Home() {
     },
   ];
 
+  const filteredProducts = useMemo(() => {
+    if (selectedCategory === 'All') return products;
+    return products.filter((p) => p.category === selectedCategory);
+  }, [selectedCategory]);
+
+  const filteredPosts = useMemo(() => {
+    if (selectedBlogCategory === 'All') return blogPosts;
+    return blogPosts.filter((post) => post.category === selectedBlogCategory);
+  }, [selectedBlogCategory]);
+
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   useEffect(() => {
     const interval = window.setInterval(() => {
       setActiveHeroImage((prev) => (prev + 1) % heroSlides.length);
     }, 3500);
-
     return () => window.clearInterval(interval);
   }, [heroSlides.length]);
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert('Thank you for your message! We will get back to you soon.');
+    setFormData({ name: '', email: '', subject: '', message: '' });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const naturalTextureBlock = (
+    <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center bg-white/70 rounded-2xl p-6 sm:p-8 lg:p-12 shadow-sm">
+      <img src={natalhair} alt="Natural hair care" className="w-full h-64 sm:h-80 lg:h-[420px] object-cover rounded-2xl" />
+      <div>
+        <h2 className="font-display font-bold text-3xl lg:text-4xl text-deep-brown mb-4">Celebrating Your Natural Texture</h2>
+        <p className="font-body text-gray-600 mb-6 leading-relaxed">
+          For too long, natural hair has been misunderstood. Aura creates gentle, effective products without
+          sulfates or parabens — so your curls stay nourished, defined, and strong.
+        </p>
+        <ul className="space-y-3 font-body text-gray-600 text-sm">
+          <li className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-gold flex-shrink-0" />
+            Type-specific formulations for waves, curls, and coils
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-gold flex-shrink-0" />
+            Shea butter, argan oil, and African-sourced botanicals
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-gold flex-shrink-0" />
+            Education to help you love your unique curl pattern
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-cream home-motion-bg">
-      <div className="pt-20">
-        {/* Hero Section */}
-        <section className="relative min-h-[82vh] lg:min-h-[90vh] flex items-center overflow-hidden">
+    <div className="min-h-screen bg-cream">
+        {/* Hero */}
+        <section id="home" className={`relative flex items-center overflow-hidden pt-20 pb-8 lg:pb-12 ${sectionClass}`}>
           <div className="absolute inset-0">
             <div className="absolute left-0 top-0 w-full md:w-1/2 h-full overflow-hidden pointer-events-none hidden md:block">
-              <div className="playful-shape playful-shape-1"></div>
-              <div className="playful-shape playful-shape-2"></div>
-              <div className="playful-shape playful-shape-3"></div>
-              <div className="playful-shape playful-shape-4"></div>
+              <div className="playful-shape playful-shape-1" />
+              <div className="playful-shape playful-shape-2" />
+              <div className="playful-shape playful-shape-3" />
+              <div className="playful-shape playful-shape-4" />
             </div>
             <div className="absolute right-0 top-0 w-full md:w-1/2 h-full overflow-hidden">
               {heroSlides.map((slide, index) => (
@@ -107,20 +141,21 @@ export default function Home() {
                   }`}
                 />
               ))}
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-cream/10 to-cream/35"></div>
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-cream/10 to-cream/35" />
             </div>
-            <div className="absolute left-0 top-0 w-full md:w-1/2 h-full bg-gradient-to-r from-cream/95 via-cream/90 to-transparent"></div>
+            <div className="absolute left-0 top-0 w-full md:w-1/2 h-full bg-gradient-to-r from-cream/95 via-cream/90 to-transparent" />
           </div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[82vh] lg:min-h-[90vh] py-12 sm:py-16 lg:py-20">
-               <div className="relative opacity-100">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-10 sm:py-12 lg:py-16">
+              <div className="relative">
                 <div key={activeHeroImage} className="hero-copy-animate relative z-10">
                   <p className="font-body text-gold font-semibold tracking-wider text-xs sm:text-sm mb-3 sm:mb-4 text-center lg:text-left">
                     {heroSlides[activeHeroImage].eyebrow}
                   </p>
                   <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-7xl text-deep-brown leading-tight mb-4 sm:mb-6 text-center lg:text-left">
-                    Aura<br />
+                    Aura
+                    <br />
                     <span className="text-gradient">{heroSlides[activeHeroImage].title}</span>
                   </h1>
                   <p className="font-body text-gray-700 text-base sm:text-lg mb-6 sm:mb-8 max-w-lg leading-relaxed text-center lg:text-left mx-auto lg:mx-0">
@@ -138,21 +173,23 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-          <a
-            href="#shop-collection"
-            className="btn-primary px-8 py-4 rounded-full font-body font-semibold inline-flex items-center gap-2"
-          >
-            Shop Collection
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-                  <a
-                    href="#our-story"
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('shop')}
+                    className="btn-primary px-8 py-4 rounded-full font-body font-semibold inline-flex items-center justify-center gap-2"
+                  >
+                    Shop Collection
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('about')}
                     className="btn-secondary px-8 py-4 rounded-full font-body font-semibold"
                   >
-                    Our Story
-                  </a>
+                    About Us
+                  </button>
                 </div>
                 <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 mt-8 sm:mt-12">
                   <div className="flex">
@@ -169,164 +206,321 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Brand Story */}
-        <section id="our-story" className="pt-24 sm:pt-28 pb-20 sm:pb-24 relative overflow-hidden">
-          <div className="absolute inset-0">
-            <div className="absolute inset-0">
-              <img
-                src={natalhair}
-                alt=""
-                className="w-full h-full object-cover opacity-15"
-              />
-              <div className="absolute inset-0 bg-cream/80"></div>
+        {/* About Us — navbar #about target */}
+        <section id="about" className={`pt-6 pb-10 lg:pb-14 bg-cream ${sectionClass}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 lg:mb-10 text-center md:text-left">
+              <p className="font-body text-gold font-semibold tracking-wider text-sm mb-2">OUR STORY</p>
+              <h2 className="font-display font-bold text-4xl lg:text-5xl text-deep-brown">About</h2>
+            </div>
+            {naturalTextureBlock}
+          </div>
+        </section>
+
+        {/* Shop */}
+        <section id="shop" className={`py-12 lg:py-16 bg-cream ${sectionClass}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 reveal text-center md:text-left">
+              <p className="font-body text-gold font-semibold tracking-wider text-sm mb-2">PREMIUM COLLECTION</p>
+              <h2 className="font-display font-bold text-4xl lg:text-5xl text-deep-brown mb-4">Discover Our Products</h2>
+              <p className="font-body text-gray-600 max-w-2xl mx-auto md:mx-0">
+                Carefully crafted formulations for every curl pattern and natural hair need.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3 mb-10 justify-center md:justify-start">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-5 py-2.5 rounded-full font-body text-sm font-semibold transition-all ${
+                    selectedCategory === category
+                      ? 'bg-deep-brown text-cream'
+                      : 'bg-white/80 text-gray-600 hover:bg-gold hover:text-deep-brown border border-gold/20'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProducts.map((product, index) => (
+                <article
+                  key={product.id}
+                  className="bg-white rounded-2xl overflow-hidden shadow-sm card-hover reveal"
+                  style={{ animationDelay: `${(index % 3) * 0.1}s` }}
+                >
+                  <Link to={`/product/${product.id}`}>
+                    <div className="relative">
+                      {product.bestseller && (
+                        <span className="absolute top-4 left-4 bg-gold text-deep-brown text-xs font-semibold px-3 py-1 rounded-full z-10">
+                          BESTSELLER
+                        </span>
+                      )}
+                      <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
+                    </div>
+                    <div className="p-6">
+                      <span className="text-xs text-gray-400 uppercase tracking-wider">{product.category}</span>
+                      <h3 className="font-display font-semibold text-lg text-deep-brown mt-2 mb-2">{product.name}</h3>
+                      <p className="font-body text-sm text-gray-500 line-clamp-2">{product.description}</p>
+                    </div>
+                  </Link>
+                  <div className="px-6 pb-6">
+                    <span className="font-display font-bold text-xl text-deep-brown">${product.price}</span>
+                    <button type="button" className="w-full mt-4 bg-deep-brown text-cream py-3 rounded-full font-body font-semibold hover:bg-gray-800 transition-colors">
+                      Add to Cart
+                    </button>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="flex justify-center">
-              <div className="reveal active text-center">
-                <p className="font-body text-gold font-semibold tracking-wider text-sm mb-4">
-                  OUR STORY
+        </section>
+
+        {/* Our heritage & values */}
+        <section id="story" className={`py-12 lg:py-16 bg-cream ${sectionClass}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-12 lg:mb-16">
+              <div className="reveal order-2 lg:order-1">
+                <p className="font-body text-gold font-semibold tracking-wider text-sm mb-4">OUR STORY</p>
+                <h2 className="font-display font-bold text-4xl lg:text-5xl text-deep-brown leading-tight mb-6">
+                  Beauty Rooted in African Heritage
+                </h2>
+                <p className="font-body text-gray-600 mb-6 leading-relaxed">
+                  Founded in 2020, Aura emerged from a simple belief: natural African hair deserves products as
+                  beautiful and complex as the people who wear it.
                 </p>
-                <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-deep-brown mb-6">At Aura, Our Story</h2>
-                <p className="font-body text-gray-700 mb-6 leading-relaxed">
-                  At Aura, our journey began with a simple need — to care for natural hair in a way that truly works.
+                <p className="font-body text-gray-600 leading-relaxed">
+                  We combine traditional botanical wisdom with modern science to celebrate curls, coils, and kinks
+                  with formulas made for Type 2, 3, and 4 textures.
                 </p>
-                <p className="font-body text-gray-700 mb-6 leading-relaxed">
-                  We saw how hard it was to find products that were both gentle and effective, without harsh chemicals or empty promises. So we decided to create something better.
-                </p>
-                <p className="font-body text-gray-700 mb-6 leading-relaxed">
-                  Aura is built on the belief that natural hair deserves real care — nourishment, moisture, and protection from root to tip. Every product we create is made with carefully selected ingredients designed to support healthy, thriving hair.
-                </p>
-                <p className="font-body text-gray-700 mb-8 leading-relaxed">
-                  This is more than hair care to us — it&apos;s confidence, self-expression, and embracing your natural beauty.
-                </p>
-                <Link
-                  to="/about"
-                  className="inline-flex items-center gap-2 text-deep-brown font-semibold hover:text-gold transition-colors"
+              </div>
+              <div className="reveal order-1 lg:order-2">
+                <img src={naturalhair1} alt="Natural hair celebration" className="w-full h-[420px] object-cover rounded-2xl shadow-xl" />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {values.map((value, index) => (
+                <div key={value.id} className="reveal text-center p-6 bg-white/60 rounded-2xl" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <div
+                    className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center"
+                    style={{ backgroundColor: value.color + '20', color: value.color }}
+                  >
+                    {value.icon === 'Leaf' && <Leaf className="w-8 h-8" />}
+                    {value.icon === 'Heart' && <Heart className="w-8 h-8" />}
+                    {value.icon === 'Recycle' && <Recycle className="w-8 h-8" />}
+                    {value.icon === 'Sparkles' && <Sparkles className="w-8 h-8" />}
+                  </div>
+                  <h3 className="font-display font-semibold text-xl text-deep-brown mb-3">{value.title}</h3>
+                  <p className="font-body text-gray-600 text-sm leading-relaxed">{value.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Blog */}
+        <section id="blog" className={`py-20 bg-cream ${sectionClass}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 reveal text-center md:text-left">
+              <p className="font-body text-gold font-semibold tracking-wider text-sm mb-2">HAIR JOURNAL</p>
+              <h2 className="font-display font-bold text-4xl lg:text-5xl text-deep-brown mb-4">Natural Hair Wisdom</h2>
+              <p className="font-body text-gray-600 max-w-2xl mx-auto md:mx-0">
+                Expert tips and stories for your natural hair journey.
+              </p>
+            </div>
+
+            {/* Featured natural hair article */}
+            <article className="bg-white rounded-2xl overflow-hidden shadow-sm mb-16 reveal">
+              <div className="grid lg:grid-cols-2">
+                <img src={naturalhair} alt="Natural hair care routine" className="w-full h-64 lg:h-full min-h-[280px] object-cover" />
+                <div className="p-8 lg:p-12 flex flex-col justify-center">
+                  <span className="inline-block w-fit bg-gold text-deep-brown text-xs font-semibold px-3 py-1 rounded-full mb-4">
+                    Featured · Natural Hair
+                  </span>
+                  <h3 className="font-display font-bold text-2xl lg:text-3xl text-deep-brown mb-4">
+                    Your Complete Natural Hair Care Routine
+                  </h3>
+                  <p className="font-body text-gray-600 leading-relaxed mb-4">
+                    Healthy natural hair starts with understanding your texture. Whether you have loose waves or tight
+                    4C coils, a consistent routine of cleanse, condition, moisturize, and seal keeps strands hydrated
+                    and breakage-free.
+                  </p>
+                  <p className="font-body text-gray-600 leading-relaxed mb-6">
+                    Wash with a sulfate-free shampoo, deep condition weekly with shea-based masks, and lock in moisture
+                    with oils that penetrate your hair shaft. Protective styles give your hair rest while you grow
+                    length — and Aura products are formulated to support every step.
+                  </p>
+                  <p className="font-body text-sm text-gray-500 flex items-center gap-4">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      May 18, 2026
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" />
+                      12 min read
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <div className="flex flex-wrap gap-3 mb-10 justify-center md:justify-start">
+              {blogCategories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setSelectedBlogCategory(category)}
+                  className={`px-5 py-2.5 rounded-full font-body text-sm font-semibold transition-all ${
+                    selectedBlogCategory === category
+                      ? 'bg-deep-brown text-cream'
+                      : 'bg-white/80 text-gray-600 hover:bg-gold hover:text-deep-brown border border-gold/20'
+                  }`}
                 >
-                   Read More
-                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                     <path d="M5 12h14M12 5l7 7-7 7"/>
-                   </svg>
-                </Link>
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.map((post, index) => (
+                <article
+                  key={post.id}
+                  className="bg-white rounded-2xl overflow-hidden shadow-sm card-hover reveal group"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="relative h-56 overflow-hidden">
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                    <span className="absolute top-4 left-4 bg-gold text-deep-brown text-xs font-semibold px-3 py-1 rounded-full">
+                      {post.category}
+                    </span>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {post.date}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {post.readTime}
+                      </span>
+                    </div>
+                    <h3 className="font-display font-semibold text-xl text-deep-brown mb-3 line-clamp-2">{post.title}</h3>
+                    <p className="font-body text-gray-600 text-sm line-clamp-3 mb-4">{post.excerpt}</p>
+                    <span className="text-gold font-semibold flex items-center gap-1 text-sm">
+                      Read More
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className={`py-20 bg-cream ${sectionClass}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16 reveal">
+              <p className="font-body text-gold font-semibold tracking-wider text-sm mb-2">GET IN TOUCH</p>
+              <h2 className="font-display font-bold text-4xl lg:text-5xl text-deep-brown mb-4">Let&apos;s Talk Beauty</h2>
+              <p className="font-body text-gray-600 max-w-2xl mx-auto">
+                Questions about your natural hair journey? Our team is here to help.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-12">
+              <div className="space-y-6">
+                {[
+                  { icon: MapPin, title: 'Visit Our Studio', details: ['Kisaasi', 'Kampala, Uganda'] },
+                  { icon: Phone, title: 'Call Us', details: ['+256 772 123 456', 'Mon–Fri: 9am – 6pm EAT'] },
+                  { icon: Mail, title: 'Email Us', details: ['hello@aura.com', 'support@aura.com'] },
+                ].map((info, index) => (
+                  <div key={info.title} className="bg-white rounded-2xl p-6 shadow-sm reveal" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <div className="w-12 h-12 rounded-xl bg-cream border border-gold/20 flex items-center justify-center mb-4">
+                      <info.icon className="w-6 h-6 text-deep-brown" />
+                    </div>
+                    <h3 className="font-display font-semibold text-lg text-deep-brown mb-2">{info.title}</h3>
+                    {info.details.map((detail) => (
+                      <p key={detail} className="font-body text-gray-600 text-sm">
+                        {detail}
+                      </p>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              <div className="lg:col-span-2">
+                <div className="bg-white rounded-2xl p-8 shadow-sm reveal">
+                  <h3 className="font-display font-semibold text-2xl text-deep-brown mb-6">Send us a Message</h3>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block font-body text-sm text-gray-600 mb-2">Full Name *</label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                          className="input-field w-full px-4 py-3 rounded-xl font-body text-gray-800"
+                          placeholder="Your name"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-body text-sm text-gray-600 mb-2">Email Address *</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                          className="input-field w-full px-4 py-3 rounded-xl font-body text-gray-800"
+                          placeholder="you@example.com"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block font-body text-sm text-gray-600 mb-2">Subject *</label>
+                      <input
+                        type="text"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        required
+                        className="input-field w-full px-4 py-3 rounded-xl font-body text-gray-800"
+                        placeholder="How can we help?"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-body text-sm text-gray-600 mb-2">Message *</label>
+                      <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        rows={5}
+                        className="input-field w-full px-4 py-3 rounded-xl font-body text-gray-800 resize-none"
+                        placeholder="Tell us about your hair goals..."
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="btn-primary w-full py-4 rounded-full font-display font-semibold flex items-center justify-center gap-3"
+                    >
+                      <Send className="w-5 h-5" />
+                      Send Message
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </section>
-
-        {/* Shop Collection */}
-        <section id="shop-collection" className="py-20 sm:py-24 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16 reveal active">
-              <p className="font-body text-deep-brown font-semibold tracking-wider text-sm mb-2">
-                SHOP COLLECTION
-              </p>
-              <h2 className="font-display font-bold text-3xl sm:text-4xl text-deep-brown">
-                Find Products by Hair Need
-              </h2>
-            </div>
-            <div className="space-y-12">
-              {collectionGroups.map((group, groupIndex) => (
-                <div key={group.title} className={`reveal active ${groupIndex % 2 === 0 ? 'fade-in-delay-100' : 'fade-in-delay-200'}`}>
-                  <h3 className="font-display font-bold text-3xl text-deep-brown mb-6">{group.title}</h3>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {group.cards.map((card) => (
-                      <div key={`${group.title}-${card.name}`} className="card-hover bg-white rounded-2xl overflow-hidden shadow-sm">
-                        <img src={card.image} alt={card.name} className="w-full h-56 object-cover" />
-                        <div className="p-5">
-                          <p className="font-display font-semibold text-lg text-deep-brown mb-2">{card.name}</p>
-                          <p className="font-body text-gold font-bold text-xl">${card.price}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials */}
-        <section className="py-24 bg-gradient-to-b from-cream via-cream to-pale-green">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16 reveal">
-              <p className="font-body text-deep-brown font-semibold tracking-wider text-sm mb-2">
-                TESTIMONIALS
-              </p>
-              <h2 className="font-display font-bold text-4xl text-deep-brown">
-                Loved by Our Community
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={testimonial.id}
-                  className={`bg-white rounded-2xl p-6 shadow-sm reveal ${index % 2 === 0 ? 'fade-in-delay-100' : 'fade-in-delay-200'}`}
-                >
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 star-rating fill-current" />
-                    ))}
-                  </div>
-                  <p className="font-body text-gray-600 italic mb-6 leading-relaxed">
-                    "{testimonial.content}"
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                    <div>
-                      <p className="font-semibold text-deep-brown">{testimonial.name}</p>
-                      <p className="text-sm text-gray-500">{testimonial.role}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Instagram Feed */}
-        <section className="py-24 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16 reveal">
-              <p className="font-body text-deep-brown font-semibold tracking-wider text-sm mb-2">
-                @AURA_BEAUTY
-              </p>
-              <h2 className="font-display font-bold text-4xl text-deep-brown mb-4">
-                Beauty Inspiration
-              </h2>
-              <p className="font-body text-gray-600">
-                Tag #AuraBeauty to be featured
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {instagramPosts.map((post, index) => (
-                <div
-                  key={index}
-                  className={`reveal group relative aspect-square overflow-hidden rounded-xl cursor-pointer ${index % 2 === 0 ? 'fade-in-delay-100' : 'fade-in-delay-200'}`}
-                >
-                  <img
-                    src={post}
-                    alt=""
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="M17 2H7C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-11c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/>
-                  </svg>
-                </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </div>
     </div>
   );
 }
