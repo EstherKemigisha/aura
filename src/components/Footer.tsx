@@ -1,7 +1,7 @@
 
 export default function Footer() {
   return (
-    <footer className="bg-deep-brown text-cream py-16 relative overflow-hidden">
+    <footer className="bg-deep-brown text-cream py-12 sm:py-16 relative overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <circle cx="50" cy="50" r="40" stroke="#C9A84C" strokeWidth="0.5" fill="none" />
@@ -9,8 +9,8 @@ export default function Footer() {
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid md:grid-cols-4 gap-12">
-          <div className="space-y-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
+          <div className="space-y-4 col-span-2 md:col-span-1">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-gold flex items-center justify-center">
                 <span className="text-deep-brown font-display font-bold text-lg">A</span>

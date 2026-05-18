@@ -32,6 +32,15 @@
     background: var(--cream);
   }
 
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   .font-display {
     font-family: 'Playfair Display', serif;
   }
@@ -71,96 +80,145 @@
 
 .motion-line {
   position: absolute;
-  height: 1px;
+  height: 2px;
   transform-origin: center center;
   will-change: transform, opacity;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(201, 168, 76, 0.12) 20%,
-    rgba(201, 168, 76, 0.28) 50%,
-    rgba(201, 168, 76, 0.12) 80%,
+    rgba(201, 168, 76, 0.14) 20%,
+    rgba(201, 168, 76, 0.32) 50%,
+    rgba(201, 168, 76, 0.14) 80%,
     transparent 100%
   );
+  animation-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
 
-@keyframes lineDriftA {
-  0%, 100% {
+/* Gentle floating arc — like slow breath */
+@keyframes lineFloatGrace {
+  0% {
     transform: rotate(var(--line-angle, 0deg)) translate(0, 0);
+    opacity: 0.16;
+  }
+  20% {
+    transform: rotate(calc(var(--line-angle, 0deg) + 1.5deg)) translate(35px, -28px);
+    opacity: 0.28;
+  }
+  45% {
+    transform: rotate(calc(var(--line-angle, 0deg) - 1deg)) translate(65px, 12px);
+    opacity: 0.34;
+  }
+  70% {
+    transform: rotate(calc(var(--line-angle, 0deg) + 0.8deg)) translate(28px, 38px);
+    opacity: 0.26;
+  }
+  100% {
+    transform: rotate(var(--line-angle, 0deg)) translate(0, 0);
+    opacity: 0.16;
+  }
+}
+
+/* Mirror path — opposite drift for variety */
+@keyframes lineFloatSoft {
+  0% {
+    transform: rotate(var(--line-angle, 0deg)) translate(0, 0);
+    opacity: 0.18;
+  }
+  30% {
+    transform: rotate(calc(var(--line-angle, 0deg) - 2deg)) translate(-45px, 32px);
+    opacity: 0.3;
+  }
+  55% {
+    transform: rotate(calc(var(--line-angle, 0deg) + 1.2deg)) translate(-20px, -40px);
+    opacity: 0.36;
+  }
+  80% {
+    transform: rotate(calc(var(--line-angle, 0deg) - 0.6deg)) translate(50px, -18px);
+    opacity: 0.24;
+  }
+  100% {
+    transform: rotate(var(--line-angle, 0deg)) translate(0, 0);
+    opacity: 0.18;
+  }
+}
+
+/* Slow glide across the viewport with soft fade */
+@keyframes lineGlideAcross {
+  0% {
+    transform: translateX(-25%) rotate(var(--line-angle, 0deg));
+    opacity: 0;
+  }
+  10% {
     opacity: 0.2;
   }
   50% {
-    transform: rotate(var(--line-angle, 0deg)) translate(90px, -55px);
-    opacity: 0.38;
+    transform: translateX(55vw) rotate(var(--line-angle, 0deg));
+    opacity: 0.32;
   }
-}
-
-@keyframes lineDriftB {
-  0%, 100% {
-    transform: rotate(var(--line-angle, 0deg)) translate(0, 0);
-    opacity: 0.22;
-  }
-  50% {
-    transform: rotate(var(--line-angle, 0deg)) translate(-75px, 65px);
-    opacity: 0.4;
-  }
-}
-
-@keyframes lineSlideAcross {
-  0% {
-    transform: translateX(-120%) rotate(var(--line-angle, 0deg));
-    opacity: 0;
-  }
-  12% {
-    opacity: 0.25;
-  }
-  88% {
-    opacity: 0.25;
+  90% {
+    opacity: 0.2;
   }
   100% {
-    transform: translateX(120vw) rotate(var(--line-angle, 0deg));
+    transform: translateX(125%) rotate(var(--line-angle, 0deg));
     opacity: 0;
   }
 }
 
-/* Lines — horizontal, diagonal, near-vertical */
+/* Vertical sway — elegant up-down drift */
+@keyframes lineSway {
+  0%, 100% {
+    transform: rotate(var(--line-angle, 0deg)) translate(0, 0);
+    opacity: 0.17;
+  }
+  33% {
+    transform: rotate(calc(var(--line-angle, 0deg) + 1deg)) translate(22px, -50px);
+    opacity: 0.3;
+  }
+  66% {
+    transform: rotate(calc(var(--line-angle, 0deg) - 1.2deg)) translate(-18px, 42px);
+    opacity: 0.33;
+  }
+}
+
+/* Lines — each with its own graceful rhythm */
 .motion-line-1 {
   --line-angle: 0deg;
-  width: min(480px, 62vw);
+  width: min(580px, 72vw);
   left: -8%;
   top: 10%;
-  animation: lineSlideAcross 26s linear infinite;
+  animation: lineGlideAcross 48s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .motion-line-2 {
   --line-angle: 45deg;
-  width: min(340px, 46vw);
+  width: min(420px, 56vw);
   right: 2%;
   top: 20%;
-  animation: lineDriftA 20s ease-in-out infinite;
-  animation-delay: -3s;
+  animation: lineFloatGrace 38s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -8s;
 }
 
 .motion-line-3 {
   --line-angle: -45deg;
-  width: min(400px, 54vw);
+  width: min(500px, 64vw);
   left: 6%;
   top: 32%;
-  animation: lineDriftB 24s ease-in-out infinite;
-  animation-delay: -6s;
+  animation: lineFloatSoft 42s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -14s;
 }
 
 .motion-line-4 {
   --line-angle: 90deg;
-  width: min(280px, 38vh);
+  width: min(360px, 48vh);
   right: 12%;
   top: 42%;
-  animation: lineDriftA 22s ease-in-out infinite reverse;
+  animation: lineSway 36s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -5s;
 }
 
 .motion-line-5 {
   --line-angle: -90deg;
-  width: min(320px, 42vh);
+  width: min(400px, 52vh);
   left: 18%;
   top: 55%;
   background: linear-gradient(
@@ -171,40 +229,303 @@
     rgba(61, 31, 10, 0.08) 70%,
     transparent
   );
-  animation: lineDriftB 26s ease-in-out infinite;
-  animation-delay: -9s;
+  animation: lineFloatSoft 40s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite reverse;
+  animation-delay: -20s;
 }
 
 .motion-line-6 {
   --line-angle: 135deg;
-  width: min(360px, 48vw);
+  width: min(450px, 58vw);
   left: 4%;
   bottom: 30%;
-  animation: lineSlideAcross 30s linear infinite;
-  animation-delay: -12s;
+  animation: lineGlideAcross 52s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -22s;
 }
 
 .motion-line-7 {
   --line-angle: -135deg;
-  width: min(420px, 55vw);
+  width: min(520px, 65vw);
   right: -6%;
   bottom: 38%;
-  animation: lineSlideAcross 32s linear infinite;
-  animation-delay: -18s;
+  animation: lineGlideAcross 55s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse;
+  animation-delay: -30s;
 }
 
 .motion-line-8 {
   --line-angle: 72deg;
-  width: min(260px, 36vw);
+  width: min(330px, 46vw);
   left: 48%;
   top: 72%;
-  animation: lineDriftA 18s ease-in-out infinite;
-  animation-delay: -5s;
+  animation: lineFloatGrace 34s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -11s;
+}
+
+.motion-line-9 {
+  --line-angle: -12deg;
+  width: min(380px, 50vw);
+  left: 25%;
+  top: 8%;
+  animation: lineFloatSoft 44s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -16s;
+}
+
+.motion-line-10 {
+  --line-angle: 120deg;
+  width: min(300px, 42vw);
+  right: 25%;
+  top: 52%;
+  animation: lineSway 40s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite reverse;
+  animation-delay: -9s;
+}
+
+.motion-line-11 {
+  --line-angle: 30deg;
+  width: min(460px, 60vw);
+  left: 55%;
+  top: 28%;
+  animation: lineGlideAcross 50s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -35s;
+}
+
+.motion-line-12 {
+  --line-angle: -72deg;
+  width: min(340px, 48vw);
+  left: 8%;
+  bottom: 12%;
+  animation: lineFloatGrace 36s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite reverse;
+  animation-delay: -24s;
+}
+
+.motion-line-13 {
+  --line-angle: 165deg;
+  width: min(280px, 40vw);
+  right: 30%;
+  bottom: 22%;
+  animation: lineFloatSoft 38s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -18s;
+}
+
+.motion-line-14 {
+  --line-angle: -30deg;
+  width: min(400px, 54vw);
+  left: 62%;
+  bottom: 45%;
+  animation: lineSway 42s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -27s;
+}
+
+.motion-line-15 {
+  --line-angle: 55deg;
+  width: min(350px, 48vw);
+  left: 72%;
+  top: 15%;
+  animation: lineFloatGrace 41s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -19s;
+}
+
+.motion-line-16 {
+  --line-angle: -55deg;
+  width: min(420px, 55vw);
+  left: 2%;
+  top: 48%;
+  animation: lineFloatSoft 45s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite reverse;
+  animation-delay: -32s;
+}
+
+.motion-line-17 {
+  --line-angle: 15deg;
+  width: min(500px, 62vw);
+  right: 15%;
+  top: 65%;
+  animation: lineGlideAcross 46s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -40s;
+}
+
+.motion-line-18 {
+  --line-angle: -105deg;
+  width: min(310px, 44vh);
+  left: 35%;
+  top: 5%;
+  animation: lineSway 39s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -13s;
+}
+
+.motion-line-19 {
+  --line-angle: 88deg;
+  width: min(290px, 40vh);
+  right: 5%;
+  bottom: 8%;
+  animation: lineFloatGrace 37s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite reverse;
+  animation-delay: -21s;
+}
+
+.motion-line-20 {
+  --line-angle: -88deg;
+  width: min(370px, 50vw);
+  left: 42%;
+  bottom: 55%;
+  animation: lineFloatSoft 43s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -28s;
+}
+
+.motion-line-21 {
+  --line-angle: 25deg;
+  width: min(440px, 58vw);
+  left: -5%;
+  bottom: 48%;
+  animation: lineGlideAcross 54s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse;
+  animation-delay: -38s;
+}
+
+.motion-line-22 {
+  --line-angle: -155deg;
+  width: min(320px, 45vw);
+  right: 42%;
+  top: 38%;
+  animation: lineSway 41s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite reverse;
+  animation-delay: -15s;
+}
+
+.motion-line-23 {
+  --line-angle: 6deg;
+  width: min(360px, 48vw);
+  left: 15%;
+  top: 24%;
+  animation: lineFloatGrace 40s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -33s;
+}
+
+.motion-line-24 {
+  --line-angle: -68deg;
+  width: min(400px, 52vw);
+  right: 8%;
+  top: 8%;
+  animation: lineFloatSoft 44s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -7s;
+}
+
+.motion-line-25 {
+  --line-angle: 110deg;
+  width: min(270px, 38vh);
+  left: 58%;
+  top: 45%;
+  animation: lineSway 38s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -25s;
+}
+
+.motion-line-26 {
+  --line-angle: -20deg;
+  width: min(480px, 60vw);
+  left: 30%;
+  bottom: 18%;
+  animation: lineGlideAcross 47s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -42s;
+}
+
+.motion-line-27 {
+  --line-angle: 42deg;
+  width: min(330px, 46vw);
+  right: 35%;
+  bottom: 62%;
+  animation: lineFloatGrace 39s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite reverse;
+  animation-delay: -17s;
+}
+
+.motion-line-28 {
+  --line-angle: -42deg;
+  width: min(410px, 54vw);
+  left: 78%;
+  top: 55%;
+  animation: lineFloatSoft 42s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite reverse;
+  animation-delay: -36s;
+}
+
+.motion-line-29 {
+  --line-angle: 95deg;
+  width: min(300px, 42vh);
+  left: 12%;
+  bottom: 35%;
+  animation: lineSway 40s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite reverse;
+  animation-delay: -22s;
+}
+
+.motion-line-30 {
+  --line-angle: -95deg;
+  width: min(450px, 58vw);
+  right: -4%;
+  top: 30%;
+  animation: lineGlideAcross 51s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse;
+  animation-delay: -45s;
+}
+
+.motion-line-31 {
+  --line-angle: 18deg;
+  width: min(290px, 40vw);
+  left: 50%;
+  top: 12%;
+  animation: lineFloatGrace 35s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -10s;
+}
+
+.motion-line-32 {
+  --line-angle: -118deg;
+  width: min(380px, 50vw);
+  left: 22%;
+  bottom: 8%;
+  animation: lineFloatSoft 41s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -29s;
+}
+
+.motion-line-33 {
+  --line-angle: 62deg;
+  width: min(340px, 47vw);
+  right: 18%;
+  bottom: 42%;
+  animation: lineSway 43s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -31s;
+}
+
+.motion-line-34 {
+  --line-angle: -62deg;
+  width: min(420px, 56vw);
+  left: 68%;
+  top: 78%;
+  animation: lineGlideAcross 49s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -48s;
 }
 
 @media (max-width: 767px) {
   .motion-line {
-    height: 1px;
+    height: 1.5px;
+  }
+
+  .motion-line-5,
+  .motion-line-7,
+  .motion-line-9,
+  .motion-line-11,
+  .motion-line-12,
+  .motion-line-13,
+  .motion-line-14,
+  .motion-line-15,
+  .motion-line-17,
+  .motion-line-18,
+  .motion-line-19,
+  .motion-line-20,
+  .motion-line-21,
+  .motion-line-22,
+  .motion-line-23,
+  .motion-line-24,
+  .motion-line-25,
+  .motion-line-26,
+  .motion-line-27,
+  .motion-line-28,
+  .motion-line-29,
+  .motion-line-30,
+  .motion-line-31,
+  .motion-line-32,
+  .motion-line-33,
+  .motion-line-34 {
+    display: none;
   }
 }
 

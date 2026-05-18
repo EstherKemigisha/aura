@@ -28,9 +28,9 @@ export default function ProductDetail() {
   const additionalImages = [natalhair, naturalhair, naturalhair1];
 
   return (
-    <div className="min-h-screen bg-cream pt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <nav className="flex items-center gap-2 font-body text-sm text-gray-500 mb-8">
+    <div className="min-h-screen bg-cream pt-16 sm:pt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+        <nav className="flex flex-wrap items-center gap-1.5 sm:gap-2 font-body text-xs sm:text-sm text-gray-500 mb-6 sm:mb-8">
           <Link to="/" className="hover:text-deep-brown transition-colors">Home</Link>
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
           <Link to="/shop" className="hover:text-deep-brown transition-colors">Shop</Link>
@@ -38,12 +38,12 @@ export default function ProductDetail() {
           <span className="text-deep-brown">{product.name}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
           <div className="reveal">
             <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
-              <img src={product.image} alt={product.name} className="w-full h-96 object-cover" />
+              <img src={product.image} alt={product.name} className="w-full h-64 sm:h-80 lg:h-96 object-cover" />
             </div>
-            <div className="grid grid-cols-4 gap-4 mt-4">
+            <div className="grid grid-cols-4 gap-2 sm:gap-4 mt-3 sm:mt-4">
               <button onClick={() => setSelectedImage(0)} className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${selectedImage === 0 ? 'border-gold' : 'border-cream'}`}>
                 <img src={product.image} alt="" className="w-full h-full object-cover" />
               </button>
@@ -61,7 +61,7 @@ export default function ProductDetail() {
                 BESTSELLER
               </span>
             )}
-            <h1 className="font-display font-bold text-4xl lg:text-5xl text-deep-brown mb-4">{product.name}</h1>
+            <h1 className="font-display font-bold text-2xl sm:text-3xl lg:text-5xl text-deep-brown mb-3 sm:mb-4">{product.name}</h1>
             <div className="flex items-center gap-2 mb-6">
               <div className="flex">
                 {[1,2,3,4,5].map((_, i) => (
@@ -86,9 +86,9 @@ export default function ProductDetail() {
                 <button onClick={() => setQuantity(quantity + 1)} className="w-12 h-12 border-2 border-deep-brown rounded-xl flex items-center justify-center text-deep-brown hover:bg-deep-brown hover:text-cream transition-colors"><Plus className="w-5 h-5" /></button>
               </div>
             </div>
-            <div className="flex gap-4 mb-8">
-              <button className="flex-1 btn-primary px-8 py-4 rounded-full font-display font-semibold text-lg flex items-center justify-center gap-3"><ShoppingBag className="w-6 h-6" />Add to Cart</button>
-              <button className="w-16 h-16 border-2 border-deep-brown rounded-xl flex items-center justify-center text-deep-brown hover:bg-deep-brown hover:text-cream transition-colors"><svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
+              <button className="flex-1 btn-primary px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-display font-semibold text-base sm:text-lg flex items-center justify-center gap-3 min-h-[48px]"><ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />Add to Cart</button>
+              <button className="w-full sm:w-16 h-12 sm:h-16 border-2 border-deep-brown rounded-xl flex items-center justify-center text-deep-brown hover:bg-deep-brown hover:text-cream transition-colors min-h-[48px]"><svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-8"><svg className="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>Free shipping on orders over $50</div>
             <div className="border-t border-cream pt-8"><h3 className="font-display font-semibold text-lg text-deep-brown mb-4">Perfect For:</h3><div className="flex flex-wrap gap-2">{product.hairType.map(type => (<span key={type} className="px-4 py-2 bg-white/50 border border-cream rounded-full text-sm font-body text-gray-600">{type}</span>))}</div></div>
