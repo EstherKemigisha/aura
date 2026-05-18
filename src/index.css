@@ -60,6 +60,161 @@
   background: var(--cream);
 }
 
+/* Animated background lines */
+.motion-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.motion-line {
+  position: absolute;
+  height: 1px;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.12) 20%,
+    rgba(201, 168, 76, 0.28) 50%,
+    rgba(201, 168, 76, 0.12) 80%,
+    transparent 100%
+  );
+}
+
+@keyframes lineDriftA {
+  0%, 100% {
+    transform: rotate(var(--line-angle, 0deg)) translate(0, 0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: rotate(var(--line-angle, 0deg)) translate(90px, -55px);
+    opacity: 0.38;
+  }
+}
+
+@keyframes lineDriftB {
+  0%, 100% {
+    transform: rotate(var(--line-angle, 0deg)) translate(0, 0);
+    opacity: 0.22;
+  }
+  50% {
+    transform: rotate(var(--line-angle, 0deg)) translate(-75px, 65px);
+    opacity: 0.4;
+  }
+}
+
+@keyframes lineSlideAcross {
+  0% {
+    transform: translateX(-120%) rotate(var(--line-angle, 0deg));
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.25;
+  }
+  88% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateX(120vw) rotate(var(--line-angle, 0deg));
+    opacity: 0;
+  }
+}
+
+/* Lines — horizontal, diagonal, near-vertical */
+.motion-line-1 {
+  --line-angle: 0deg;
+  width: min(480px, 62vw);
+  left: -8%;
+  top: 10%;
+  animation: lineSlideAcross 26s linear infinite;
+}
+
+.motion-line-2 {
+  --line-angle: 45deg;
+  width: min(340px, 46vw);
+  right: 2%;
+  top: 20%;
+  animation: lineDriftA 20s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+.motion-line-3 {
+  --line-angle: -45deg;
+  width: min(400px, 54vw);
+  left: 6%;
+  top: 32%;
+  animation: lineDriftB 24s ease-in-out infinite;
+  animation-delay: -6s;
+}
+
+.motion-line-4 {
+  --line-angle: 90deg;
+  width: min(280px, 38vh);
+  right: 12%;
+  top: 42%;
+  animation: lineDriftA 22s ease-in-out infinite reverse;
+}
+
+.motion-line-5 {
+  --line-angle: -90deg;
+  width: min(320px, 42vh);
+  left: 18%;
+  top: 55%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(61, 31, 10, 0.08) 30%,
+    rgba(61, 31, 10, 0.18) 50%,
+    rgba(61, 31, 10, 0.08) 70%,
+    transparent
+  );
+  animation: lineDriftB 26s ease-in-out infinite;
+  animation-delay: -9s;
+}
+
+.motion-line-6 {
+  --line-angle: 135deg;
+  width: min(360px, 48vw);
+  left: 4%;
+  bottom: 30%;
+  animation: lineSlideAcross 30s linear infinite;
+  animation-delay: -12s;
+}
+
+.motion-line-7 {
+  --line-angle: -135deg;
+  width: min(420px, 55vw);
+  right: -6%;
+  bottom: 38%;
+  animation: lineSlideAcross 32s linear infinite;
+  animation-delay: -18s;
+}
+
+.motion-line-8 {
+  --line-angle: 72deg;
+  width: min(260px, 36vw);
+  left: 48%;
+  top: 72%;
+  animation: lineDriftA 18s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+@media (max-width: 767px) {
+  .motion-line {
+    height: 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-line {
+    animation: none;
+    opacity: 0.15;
+  }
+}
+
 .gold-gradient {
   background: linear-gradient(135deg, #C9A84C 0%, #E8D5A7 100%);
 }
