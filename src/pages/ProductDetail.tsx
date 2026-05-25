@@ -3,12 +3,19 @@ import { Minus, Plus, ShoppingBag } from 'lucide-react';
 import { products } from '../data/products';
 import { useState } from 'react';
 import { productGalleryThumbnails } from '../data/images';
+import { useCart } from '../context/CartContext';
 
 export default function ProductDetail() {
   const { id } = useParams();
+  const { openAddToCartModal } = useCart();
   const product = products.find(p => p.id === id);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    if (!product) return;
+    openAddToCartModal(product, quantity);
+  };
 
   if (!product) {
     return (
@@ -85,7 +92,14 @@ export default function ProductDetail() {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
-              <button className="flex-1 btn-primary px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-display font-semibold text-base sm:text-lg flex items-center justify-center gap-3 min-h-[48px]"><ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />Add to Cart</button>
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className="flex-1 btn-primary px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-display font-semibold text-base sm:text-lg flex items-center justify-center gap-3 min-h-[48px]"
+              >
+                <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
+                Add to Cart
+              </button>
               <button className="w-full sm:w-16 h-12 sm:h-16 border-2 border-deep-brown rounded-xl flex items-center justify-center text-deep-brown hover:bg-deep-brown hover:text-cream transition-colors min-h-[48px]"><svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-8"><svg className="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>Free shipping on orders over $50</div>

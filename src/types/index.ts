@@ -42,3 +42,14 @@ export interface Value {
   icon: string;
   color: string;
 }
+
+export type PurchaseMethodId = 'whatsapp' | 'pickup' | 'delivery' | 'email';
+
+export interface CartItem {
+  productId: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+  purchaseMethod: PurchaseMethodId;
+}

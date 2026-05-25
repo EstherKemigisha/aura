@@ -1,9 +1,12 @@
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingBag } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { itemCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -60,14 +63,28 @@ export default function Navbar() {
             ))}
           </div>
 
-          <button
-            className="md:hidden p-2.5 text-gray-600 hover:text-deep-brown transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center z-10"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="flex items-center gap-1 z-10">
+            <Link
+              to="/cart"
+              className="relative p-2.5 text-gray-600 hover:text-deep-brown transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label={`Cart${itemCount > 0 ? `, ${itemCount} items` : ''}`}
+            >
+              <ShoppingBag className="w-6 h-6" />
+              {itemCount > 0 && (
+                <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-deep-brown text-[10px] font-bold flex items-center justify-center">
+                  {itemCount > 99 ? '99+' : itemCount}
+                </span>
+              )}
+            </Link>
+            <button
+              className="md:hidden p-2.5 text-gray-600 hover:text-deep-brown transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isOpen}
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
 

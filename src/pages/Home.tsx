@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import {
   Leaf,
   Heart,
@@ -35,6 +36,7 @@ const homeCardImgH = `w-full ${heroMobileH} object-cover object-center`;
 const heroContentMinH = 'min-h-[480px] sm:min-h-[520px] md:min-h-[560px]';
 
 export default function Home() {
+  const { openAddToCartModal } = useCart();
   const [activeHeroImage, setActiveHeroImage] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedBlogCategory, setSelectedBlogCategory] = useState('All');
@@ -107,6 +109,13 @@ export default function Home() {
     }, 3500);
     return () => window.clearInterval(interval);
   }, [heroSlides.length]);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      requestAnimationFrame(() => scrollToSection(hash));
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -341,7 +350,11 @@ export default function Home() {
                   </Link>
                   <div className="px-6 pb-6">
                     <span className="font-display font-bold text-xl text-deep-brown">${product.price}</span>
-                    <button type="button" className="w-full mt-4 bg-deep-brown text-cream py-3 rounded-full font-body font-semibold hover:bg-gray-800 transition-colors min-h-[44px]">
+                    <button
+                      type="button"
+                      onClick={() => openAddToCartModal(product)}
+                      className="w-full mt-4 bg-deep-brown text-cream py-3 rounded-full font-body font-semibold hover:bg-gray-800 transition-colors min-h-[44px]"
+                    >
                       Add to Cart
                     </button>
                   </div>

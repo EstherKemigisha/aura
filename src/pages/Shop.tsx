@@ -1,11 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useMemo, useEffect } from 'react';
 import { products } from '../data/products';
+import { useCart } from '../context/CartContext';
 
 const categories = ['All', 'Treatments', 'Styling', 'Shampoo', 'Conditioner'];
 const hairTypes = ['All Types', 'Type 2', 'Type 3', 'Type 4', 'Curly', 'Coily', 'Wavy', 'Dry Hair', 'Damaged Hair', 'Color Treated'];
 
 export default function Shop() {
+  const { openAddToCartModal } = useCart();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedHairType, setSelectedHairType] = useState('All Types');
   const [sortBy, setSortBy] = useState('featured');
@@ -209,7 +211,11 @@ export default function Shop() {
                           </span>
                         )}
                       </div>
-                      <button className="w-full bg-deep-brown text-cream py-3 rounded-full font-body font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => openAddToCartModal(product)}
+                        className="w-full bg-deep-brown text-cream py-3 rounded-full font-body font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+                      >
                         Add to Cart
                       </button>
                     </div>
