@@ -19,6 +19,7 @@ import { values } from '../data/values';
 import natalhair from '../assets/natalhair.jpg';
 import naturalhair from '../assets/naturalhair.jpeg';
 import naturalhair1 from '../assets/naturalhair1.jpg';
+import { galleryImages } from '../data/images';
 
 const categories = ['All', 'Treatments', 'Styling', 'Shampoo', 'Conditioner'];
 const blogCategories = ['All', 'Hair Care', 'Styling', 'Transitioning', 'Education'];
@@ -119,7 +120,7 @@ export default function Home() {
 
   const naturalTextureBlock = (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center bg-white/70 rounded-2xl p-5 sm:p-8 lg:p-12 shadow-sm">
-      <img src={natalhair} alt="Natural hair care" className={`${homeImgH} rounded-2xl`} />
+      <img src={galleryImages.hairPickMirror} alt="Natural hair care" className={`${homeImgH} rounded-2xl`} />
       <div>
         <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-deep-brown mb-4 text-center lg:text-left">Celebrating Your Natural Texture</h2>
         <p className="font-body text-gray-600 mb-6 leading-relaxed text-center lg:text-left">
@@ -262,7 +263,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="order-1 lg:order-2">
-                <img src={naturalhair1} alt="Natural hair celebration" className={`${homeImgH} rounded-2xl shadow-xl`} />
+                <img src={galleryImages.hairThreeWomen} alt="Natural hair celebration" className={`${homeImgH} rounded-2xl shadow-xl`} />
               </div>
             </div>
 
@@ -365,7 +366,7 @@ export default function Home() {
             {/* Featured natural hair article */}
             <article className="bg-white rounded-2xl overflow-hidden shadow-sm mb-10 sm:mb-16 reveal">
               <div className="grid lg:grid-cols-2">
-                <img src={naturalhair} alt="Natural hair care routine" className={homeImgH} />
+                <img src={galleryImages.hairMirrorRobe} alt="Natural hair care routine" className={homeImgH} />
                 <div className="p-5 sm:p-8 lg:p-12 flex flex-col justify-center">
                   <span className="inline-block w-fit bg-gold text-deep-brown text-xs font-semibold px-3 py-1 rounded-full mb-4">
                     Featured · Natural Hair

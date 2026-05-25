@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Leaf, Heart, Recycle, Sparkles } from 'lucide-react';
 import { values } from '../data/values';
-import natalhair from '../assets/natalhair.jpg';
-import naturalhair from '../assets/naturalhair.jpeg';
-import naturalhair1 from '../assets/naturalhair1.jpg';
+import { galleryImages } from '../data/images';
 
 export default function About() {
     return (
@@ -13,7 +11,7 @@ export default function About() {
         <div className="absolute inset-0">
           <div className="absolute right-0 top-0 w-1/2 h-full">
             <img
-              src={naturalhair1}
+              src={galleryImages.hairCelebrate}
               alt="Founder story"
               className="w-full h-full object-cover opacity-80"
             />
@@ -55,7 +53,7 @@ export default function About() {
             <div className="reveal">
               <div className="relative">
                 <img
-                  src={natalhair}
+                  src={galleryImages.hairForest}
                   alt="Founder"
                   className="w-full h-[600px] object-cover rounded-2xl shadow-2xl"
                 />
@@ -223,7 +221,7 @@ export default function About() {
             </div>
             <div className="reveal">
               <img
-                src={naturalhair}
+                src={galleryImages.hairThreeWomen}
                 alt="Natural hair celebration"
                 className="w-full h-[600px] object-cover rounded-2xl shadow-2xl"
               />

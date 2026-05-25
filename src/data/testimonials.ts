@@ -1,10 +1,5 @@
 import type { Testimonial } from '../types';
-import natalhair from '../assets/natalhair.jpg';
-import naturalhair from '../assets/naturalhair.jpeg';
-import naturalhair1 from '../assets/naturalhair1.jpg';
-
-const testimonialImages = [natalhair, naturalhair, naturalhair1];
-
+import { testimonialImages } from './images';
 
 export const testimonials: Testimonial[] = [
   {
@@ -36,7 +31,7 @@ export const testimonials: Testimonial[] = [
     name: 'Sophie Williams',
     role: 'Fashion Designer',
     content: 'Beautiful packaging, divine scents, and most importantly - my coils have never looked better. The moisture Rich Conditioner is pure luxury for my hair.',
-    image: testimonialImages[0],
+    image: testimonialImages[3],
     rating: 5,
   },
 ];

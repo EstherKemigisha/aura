@@ -1,9 +1,5 @@
 import type { Product } from '../types';
-import natalhair from '../assets/natalhair.jpg';
-import naturalhair from '../assets/naturalhair.jpeg';
-import naturalhair1 from '../assets/naturalhair1.jpg';
-
-const productImages = [natalhair, naturalhair, naturalhair1];
+import { productImages } from './images';
 
 export const products: Product[] = [
   {
@@ -54,7 +50,7 @@ export const products: Product[] = [
     name: 'Moisture Rich Conditioner',
     price: 35,
     description: 'Ultra-hydrating conditioner that detangles and prevents breakage.',
-    image: productImages[2],
+    image: productImages[3],
     category: 'Conditioner',
     hairType: ['Type 3', 'Type 4', 'Dry Hair', 'Damaged Hair'],
     ingredients: ['Mango Butter', 'Coconut Milk', 'Avocado Oil', 'Proteins'],
@@ -68,7 +64,7 @@ export const products: Product[] = [
     name: 'Scalp Care Serum',
     price: 42,
     description: 'Nourishing serum that promotes healthy scalp and stimulates hair growth.',
-    image: productImages[0],
+    image: productImages[4],
     category: 'Treatments',
     hairType: ['All Types', 'Thinning Hair', 'Dry Scalp'],
     ingredients: ['Rosemary Oil', 'Castor Oil', 'Peppermint Oil', 'Vitamin B5'],
@@ -82,7 +78,7 @@ export const products: Product[] = [
     name: 'Protective Hair Oil',
     price: 38,
     description: 'Multi-purpose oil that adds shine, reduces frizz, and protects from heat damage.',
-    image: productImages[1],
+    image: productImages[5],
     category: 'Styling',
     hairType: ['All Types', 'High Porosity', 'Color Treated'],
     ingredients: ['Argan Oil', 'Jojoba Oil', 'Vitamin E', 'Sunflower Oil'],
@@ -96,7 +92,7 @@ export const products: Product[] = [
     name: 'Hydrating Leave-In Conditioner',
     price: 29,
     description: 'Daily leave-in treatment that provides 24-hour moisture without weighing hair down.',
-    image: productImages[2],
+    image: productImages[6],
     category: 'Conditioner',
     hairType: ['Type 2', 'Type 3', 'Type 4', 'All Types'],
     ingredients: ['Aloe Vera', 'Panthenol', 'Hydrolyzed Silk', 'Glycerin'],
@@ -110,7 +106,7 @@ export const products: Product[] = [
     name: 'Deep Repair Treatment',
     price: 52,
     description: 'Intensive reconstruction treatment for severely damaged or chemically treated hair.',
-    image: productImages[0],
+    image: productImages[7],
     category: 'Treatments',
     hairType: ['Type 4', 'Chemically Treated', 'Severely Damaged'],
     ingredients: ['Hydrolyzed Keratin', 'Amino Acids', 'Ceramides', 'Collagen'],

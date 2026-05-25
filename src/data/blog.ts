@@ -1,9 +1,5 @@
 import type { BlogPost } from '../types';
-import natalhair from '../assets/natalhair.jpg';
-import naturalhair from '../assets/naturalhair.jpeg';
-import naturalhair1 from '../assets/naturalhair1.jpg';
-
-const blogImages = [natalhair, naturalhair, naturalhair1];
+import { blogImages } from './images';
 
 export const blogPosts: BlogPost[] = [
   {
@@ -44,7 +40,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Understanding Your Curl Pattern',
     excerpt: 'Everything you need to know about the Type 2, 3, and 4 classification system and what it means for your routine.',
     content: 'Full guide content here...',
-    image: blogImages[0],
+    image: blogImages[3],
     author: 'Dr. Maya Okafor',
     date: 'April 12, 2026',
     readTime: '5 min read',
@@ -55,7 +51,7 @@ export const blogPosts: BlogPost[] = [
     title: 'DIY Hair Masks with Kitchen Ingredients',
     excerpt: 'Natural, affordable treatments you can make at home to boost your hair health between salon visits.',
     content: 'Full guide content here...',
-    image: blogImages[1],
+    image: blogImages[4],
     author: 'Amanda Foster',
     date: 'April 5, 2026',
     readTime: '7 min read',
@@ -66,7 +62,7 @@ export const blogPosts: BlogPost[] = [
     title: 'The Science of Hair Porosity',
     excerpt: 'Understanding low, medium, and high porosity will transform how you approach moisturizing your curls.',
     content: 'Full guide content here...',
-    image: blogImages[2],
+    image: blogImages[5],
     author: 'Dr. Kemi Adebayo',
     date: 'March 28, 2026',
     readTime: '9 min read',

@@ -2,9 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Minus, Plus, ShoppingBag } from 'lucide-react';
 import { products } from '../data/products';
 import { useState } from 'react';
-import natalhair from '../assets/natalhair.jpg';
-import naturalhair from '../assets/naturalhair.jpeg';
-import naturalhair1 from '../assets/naturalhair1.jpg';
+import { productGalleryThumbnails } from '../data/images';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -25,7 +23,7 @@ export default function ProductDetail() {
     );
   }
 
-  const additionalImages = [natalhair, naturalhair, naturalhair1];
+  const additionalImages = productGalleryThumbnails.filter((img) => img !== product.image);
 
   return (
     <div className="min-h-screen bg-cream pt-16 sm:pt-20">
